@@ -13,14 +13,21 @@ public class Test {
 	// 应用层，简单理解为main函数去调用
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		IService hello = (IService) context.getBean(ServiceImpl.class);
+		IService hello = (IService) context.getBean("service");
 
 		// 这里没有实例化任何Dao、Service对象，而是从Spring容器中直接取出的
 		// 即：Spring实例化并维护这些对象。
 		// 因此Spring是一个轻量级的容器，能生产、管理、维护各种实例
 		hello.service("Pan");
 
+		// 要向上转型才能有close方法
 		((ConfigurableApplicationContext)context).close();
+		
+		/*
+		 * Service、Dao是作为独立组件出现的，在编码阶段，既没有实例化对象，也没有设置依赖关系。
+		 * 而是把他们交给Spring，由Spring在运行阶段实例化、组装对象，这种做法颠覆了传统的写代码实例化，
+		 * 组装对象，然后一步步执行的做法，被称为控制反转IoC。
+		 */
 		
 	}
 
