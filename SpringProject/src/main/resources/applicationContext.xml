@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+    xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+	<!-- Dao层 -->
+	<!-- 这里生成一个DaoImpl的Bean,实现了IDao接口的 -->
+	<!-- 这里需要一个具体的实现，不可能给你一个IDao的接口然后拿个没有实现功能的接口传给Service吧。 -->
+    <bean id="daoImpl" class="com.spring.Test.DaoImpl"></bean>
+
+	<!-- Service层 -->
+	<!-- 这里生成一个service的Bean,实现了IService接口的 -->
+	<!-- 并且其中包含了一个daoImpl的Bean——实现了"组装" -->
+    <bean id="service" class="com.spring.Test.ServiceImpl">
+    	<!-- ref表示引用了一个daoImpl的类，名为dao。
+    	而把ref换成value则表示一个叫dao值为"daoImpl"的String -->
+        <property name="dao" ref="daoImpl" /> 
+    </bean>
+	<!-- 至此，Dao层和Service层的生成和组装都完成了，只要Spring把当前的上下文理解了，就能直接在其容器中生成应用层实现功能所要的一切 -->
+
+</beans>
